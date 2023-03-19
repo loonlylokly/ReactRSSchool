@@ -1,8 +1,14 @@
+import Search from '../components/Search/Search';
 import React from 'react';
 
 class Homepage extends React.Component {
   render() {
-    return <h1>Hello World</h1>;
+    return (
+      <>
+        <h1>Hello World</h1>
+        <Search />
+      </>
+    );
   }
 }
 

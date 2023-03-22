@@ -19,7 +19,6 @@ class Search extends React.Component<object, { search: string }> {
 
   componentWillUnmount() {
     localStorage.setItem('search', this.state.search);
-    alert(localStorage.getItem('search'));
   }
 
   render() {

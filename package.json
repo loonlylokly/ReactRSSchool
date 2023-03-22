@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "eslint": "eslint ./src",
     "eslint-fix": "eslint ./src --fix --color",
-    "test": "vitest"
+    "test": "vitest",
+    "coverage": "vitest --coverage"
   },
   "dependencies": {
     "react": "^18.2.0",

@@ -6,13 +6,4 @@ class AboutUs extends React.Component {
   }
 }
 
-// const AboutUs = () => {
-//   return (
-//     <>
-//       <h1>About us</h1>
-//       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-//     </>
-//   );
-// };
-
 export default AboutUs;

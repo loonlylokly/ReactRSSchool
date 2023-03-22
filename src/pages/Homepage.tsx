@@ -15,12 +15,4 @@ class Homepage extends React.Component {
   }
 }
 
-// const Homepage = () => {
-//   return (
-//     <>
-//       <h1>Hello world</h1>
-//     </>
-//   );
-// };
-
 export default Homepage;

@@ -6,12 +6,4 @@ class Footer extends React.Component {
   }
 }
 
-// const Footer = () => {
-//   return (
-//     <>
-//       <h2>Footer</h2>
-//     </>
-//   );
-// };
-
 export default Footer;

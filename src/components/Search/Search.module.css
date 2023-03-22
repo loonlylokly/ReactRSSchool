@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 80px 0;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: 40px;
+  background: #d3d3d3;
+  padding: 0 10px;
+}
+
+.input {
+  font-size: 18px;
+  background: none;
+  color: #5a6674;
+  width: 195px;
+  height: 20px;
+  border: none;
+  appearance: none;
+  outline: none;
+}
+
+.button {
+  max-width: 50px;
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  color: #9f2020;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+.button svg {
+  width: 20px;
+  fill: #ccc;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}

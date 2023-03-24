@@ -19,6 +19,11 @@ class Header extends React.Component {
               </Link>
             </li>
             <li className={styles.item}>
+              <Link className={styles.link} to="/add-card">
+                Add Card
+              </Link>
+            </li>
+            <li className={styles.item}>
               <Link className={styles.link} to="/404">
                 404
               </Link>

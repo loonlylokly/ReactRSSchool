@@ -55,7 +55,12 @@ class AddCard extends React.Component<unknown, IStateFormCard> {
     this.submitted = true;
 
     if (this.validator.resultValidation) {
-      // handle actual form submission here
+      const cards = JSON.parse(localStorage.getItem('cards') || '[]');
+      cards.push({
+        cardName: values.name,
+      });
+      console.log(cards);
+      localStorage.setItem('cards', JSON.stringify(cards));
     }
   };
 

@@ -7,26 +7,36 @@ import SelectOptions from '../components/Form/SelectOptions/SelectOptions';
 import Submit from '../components/Form/Submit/Submit';
 import React from 'react';
 import styles from '../styles/AddCard.module.css';
-
-type IStateFormCard = {
-  name: string;
-};
+import FormValidator from '../components/Form/FormValidator';
+import { IStateFormCard } from '../types/IStateFormCard';
 
 class AddCard extends React.Component<unknown, IStateFormCard> {
   nameRef;
   describeRef;
   submitRef;
   nameErrorText: string;
+  validator;
+  submitted: boolean;
 
   constructor(props: unknown) {
     super(props);
-    this.state = {
-      name: 'jj',
-    };
     this.nameRef = React.createRef<HTMLInputElement>();
     this.describeRef = React.createRef<HTMLInputElement>();
     this.submitRef = React.createRef<HTMLInputElement>();
     this.nameErrorText = '';
+    this.validator = new FormValidator([
+      {
+        field: 'name',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'Name is required.',
+      },
+    ]);
+    this.state = {
+      name: '',
+      validation: this.validator.valid(),
+    };
+    this.submitted = false;
   }
 
   isCorrectName = (name: string) => {
@@ -35,32 +45,27 @@ class AddCard extends React.Component<unknown, IStateFormCard> {
   };
 
   handleSubmit = (event: React.FormEvent) => {
-    // if (this.isCorrectName(this.nameRef.current?.value as string)) {
-    //   this.setState({
-    //     name: this.nameRef.current?.value as string,
-    //   });
-    //   this.nameErrorText = '';
-    // } else {
-    //   this.nameErrorText = 'name is too long or empty';
-    //   console.log(this.nameErrorText);
-    // }
     event.preventDefault();
-    // const validation = this.validator.validate(this.state);
-    // this.setState({ validation });
-    // this.submitted = true;
+    const values = { name: this.nameRef.current?.value as string };
+    const validation = this.validator.validate(values);
+    this.setState({
+      name: this.nameRef.current?.value as string,
+      validation: validation,
+    });
+    this.submitted = true;
 
-    // if (validation.isValid) {
-    //   // handle actual form submission here
-    // }
+    if (this.validator.resultValidation) {
+      // handle actual form submission here
+    }
   };
 
   render() {
+    // const validation = this.submitted ? this.validator.validate(this.state) : this.state.validation;
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <label htmlFor="name">
-            Product Name <span className={styles.errorFormField}>{this.nameErrorText}</span>
-          </label>
+          <label htmlFor="name">Product Name</label>
+          <span className={styles.errorFormField}> {this.state.validation.name.message}</span>
           <br />
           <input type="text" id="name" placeholder="Name" name="name" ref={this.nameRef} />
         </div>

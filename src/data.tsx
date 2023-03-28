@@ -1,6 +1,6 @@
 import { ICard } from 'types/ICard';
 
-const myCards: ICard[] = [
+export const myCards: ICard[] = [
   {
     id: '1',
     title: 'Village Hi-fi',
@@ -48,4 +48,47 @@ const myCards: ICard[] = [
   },
 ];
 
-export default myCards;
+export const validationRules = [
+  {
+    field: 'name',
+    method: 'isCorrectText',
+    validWhen: true,
+    message: 'Name is required and capitalized',
+  },
+  {
+    field: 'descript',
+    method: 'isCorrectText',
+    validWhen: true,
+    message: 'Description is required and capitalized',
+  },
+  {
+    field: 'date',
+    method: 'isCorrectDate',
+    validWhen: true,
+    message: 'Date is required or older',
+  },
+  {
+    field: 'type',
+    method: 'isCorrectType',
+    validWhen: true,
+    message: 'Type is required.',
+  },
+  {
+    field: 'checkbox',
+    method: 'isCorrectCheckbox',
+    validWhen: true,
+    message: 'Special is required.',
+  },
+  {
+    field: 'availability',
+    method: 'isCorrectAvailability',
+    validWhen: true,
+    message: 'Availability is required.',
+  },
+  {
+    field: 'file',
+    method: 'isCorrectFile',
+    validWhen: true,
+    message: 'File is required.',
+  },
+];

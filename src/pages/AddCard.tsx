@@ -5,6 +5,7 @@ import FormValidator from '../components/Form/FormValidator';
 import { IStateFormCard } from '../types/IStateFormCard';
 import { v4 as uuidv4 } from 'uuid';
 import List from '../components/List';
+import { validationRules } from '../data';
 
 class AddCard extends React.Component<unknown, IStateFormCard> {
   nameRef;
@@ -32,50 +33,7 @@ class AddCard extends React.Component<unknown, IStateFormCard> {
     this.fileRef = React.createRef<HTMLInputElement>();
     this.submitRef = React.createRef<HTMLInputElement>();
     this.formRef = React.createRef<HTMLFormElement>();
-    this.validator = new FormValidator([
-      {
-        field: 'name',
-        method: 'isCorrectText',
-        validWhen: true,
-        message: 'Name is required and capitalized',
-      },
-      {
-        field: 'descript',
-        method: 'isCorrectText',
-        validWhen: true,
-        message: 'Description is required and capitalized',
-      },
-      {
-        field: 'date',
-        method: 'isCorrectDate',
-        validWhen: true,
-        message: 'Date is required or older',
-      },
-      {
-        field: 'type',
-        method: 'isCorrectType',
-        validWhen: true,
-        message: 'Type is required.',
-      },
-      {
-        field: 'checkbox',
-        method: 'isCorrectCheckbox',
-        validWhen: true,
-        message: 'Special is required.',
-      },
-      {
-        field: 'availability',
-        method: 'isCorrectAvailability',
-        validWhen: true,
-        message: 'Availability is required.',
-      },
-      {
-        field: 'file',
-        method: 'isCorrectFile',
-        validWhen: true,
-        message: 'File is required.',
-      },
-    ]);
+    this.validator = new FormValidator(validationRules);
     this.state = {
       name: '',
       descript: '',
@@ -84,7 +42,7 @@ class AddCard extends React.Component<unknown, IStateFormCard> {
       checkbox: '',
       availability: '',
       file: '',
-      validation: this.validator.valid(),
+      validation: this.validator.validDefault(),
     };
     this.submitted = false;
   }
@@ -135,7 +93,6 @@ class AddCard extends React.Component<unknown, IStateFormCard> {
   };
 
   render() {
-    console.log(localStorage.getItem('cards') ?? '[]');
     return (
       <form onSubmit={this.handleSubmit} ref={this.formRef}>
         <div>

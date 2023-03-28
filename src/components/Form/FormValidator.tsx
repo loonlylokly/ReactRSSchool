@@ -6,7 +6,6 @@ class FormValidator {
   validator: Record<string, (data: string) => boolean | ((data: boolean) => boolean)>;
   resultValidation: boolean;
   constructor(validations: IValidation[]) {
-    // validations is an array of validation rules specific to a form
     this.validations = validations;
     this.resultValidation = true;
     this.validator = {};
@@ -22,7 +21,7 @@ class FormValidator {
   };
 
   isCorrectType = (str: string) => {
-    return str !== '--Please choose an option--';
+    return ['Classic', 'Electric', 'Steam'].findIndex((item) => item === str) !== -1;
   };
 
   isCorrectCheckbox = (str: string) => {
@@ -38,8 +37,7 @@ class FormValidator {
   };
 
   validate(values: Record<string, string>) {
-    const resultValidation = this.valid();
-    this.resultValidation = true;
+    const resultValidation = this.validDefault();
     this.validator['isCorrectText'] = this.isCorrectText;
     this.validator['isCorrectDate'] = this.isCorrectDate;
     this.validator['isCorrectType'] = this.isCorrectType;
@@ -57,7 +55,7 @@ class FormValidator {
     return resultValidation;
   }
 
-  valid = () => {
+  validDefault = () => {
     const validation = this.validations.reduce((acc: Record<string, IValid>, rule) => {
       acc[rule.field] = { isInvalid: false, message: '' };
       return acc;

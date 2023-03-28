@@ -86,7 +86,6 @@ class AddCard extends React.Component<unknown, IStateFormCard> {
         description: values.descript,
         image: values.file,
       });
-      console.log(cards);
       localStorage.setItem('cards', JSON.stringify(cards));
       this.formRef.current?.reset();
     }

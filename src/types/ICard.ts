@@ -1,8 +1,9 @@
 export interface ICard {
   id: string;
   title: string;
-  price: string;
-  category: string;
+  type: string;
+  availability: string;
+  special: string;
   description: string;
   image: string;
 }

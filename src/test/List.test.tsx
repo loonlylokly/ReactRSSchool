@@ -5,20 +5,22 @@ import { ICard } from 'types/ICard';
 
 const cards: ICard[] = [
   {
-    id: '3',
-    title: 'Test1',
-    price: '123$',
-    description: 'test description1',
-    category: 'newTest',
-    image: 'test3.png',
+    id: '2',
+    title: 'Holy Minimalism',
+    type: 'Classic',
+    availability: 'Available',
+    special: 'not special',
+    description: 'description_2',
+    image: '2.png',
   },
   {
-    id: '4',
-    title: 'Test2',
-    price: '123$',
-    description: 'test description2',
-    category: 'newTest',
-    image: 'test4.png',
+    id: '3',
+    title: 'Boiling Baroque',
+    type: 'Classic',
+    availability: 'Not Available',
+    special: 'not special',
+    description: 'description_3',
+    image: '3.png',
   },
 ];
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1679914481435" clover="3.2.0">
-  <project timestamp="1679914481435" name="All files">
-    <metrics statements="155" coveredstatements="153" conditionals="11" coveredconditionals="11" methods="11" coveredmethods="10" elements="177" coveredelements="174" complexity="0" loc="155" ncloc="155" packages="6" files="7" classes="7"/>
+<coverage generated="1680008657829" clover="3.2.0">
+  <project timestamp="1680008657829" name="All files">
+    <metrics statements="158" coveredstatements="156" conditionals="11" coveredconditionals="11" methods="11" coveredmethods="10" elements="180" coveredelements="177" complexity="0" loc="158" ncloc="158" packages="6" files="7" classes="7"/>
     <package name="components">
       <metrics statements="22" coveredstatements="22" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
       <file name="List.tsx" path="/home/lonly/Projects/ReactRSSchool/src/components/List.tsx">
@@ -31,9 +31,9 @@
       </file>
     </package>
     <package name="components.Card">
-      <metrics statements="23" coveredstatements="23" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <metrics statements="26" coveredstatements="26" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
       <file name="Card.tsx" path="/home/lonly/Projects/ReactRSSchool/src/components/Card/Card.tsx">
-        <metrics statements="23" coveredstatements="23" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <metrics statements="26" coveredstatements="26" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -54,9 +54,12 @@
         <line num="18" count="3" type="stmt"/>
         <line num="19" count="3" type="stmt"/>
         <line num="20" count="3" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
       </file>
     </package>
     <package name="components.Footer">

@@ -5,11 +5,12 @@ import { ICard } from 'types/ICard';
 
 const card: ICard = {
   id: '2',
-  title: 'Test',
-  price: '123$',
-  description: 'meow meow meow',
-  category: 'newTest',
-  image: 'test.png',
+  title: 'Holy Minimalism',
+  type: 'Classic',
+  availability: 'Available',
+  special: 'not special',
+  description: 'description_2',
+  image: '2.png',
 };
 
 describe('<Card>', () => {

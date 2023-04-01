@@ -180,10 +180,10 @@ class AddCard extends React.Component<unknown, IStateFormCard> {
           <span className={styles.errorFormField}> {this.state.validation.file.message}</span>
         </div>
         <Submit />
-        <List
+        {/* <List
           items={JSON.parse(localStorage.getItem('cards') ?? '[]')}
           classNameList={`${styles.cards__list}`}
-        />
+        /> */}
       </form>
     );
   }

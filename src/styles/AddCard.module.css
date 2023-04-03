@@ -16,3 +16,7 @@ form {
   flex-flow: column wrap;
   align-content: center;
 }
+
+.success {
+  color: green;
+}

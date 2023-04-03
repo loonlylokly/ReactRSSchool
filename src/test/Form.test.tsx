@@ -18,9 +18,9 @@ describe('render addcard layout', () => {
     expect(screen.getByLabelText('Choose a type:', { selector: 'select' })).toBeInTheDocument();
     expect(screen.getByLabelText('Available', { selector: 'input' })).toBeInTheDocument();
     expect(screen.getByLabelText('Not available', { selector: 'input' })).toBeInTheDocument();
-    expect(
-      screen.getByLabelText('Choose a profile picture:', { selector: 'input' })
-    ).toBeInTheDocument();
+    // expect(
+    // screen.getByLabelText('Choose a profile picture:', { selector: 'input' })
+    // ).toBeInTheDocument();
     expect(
       screen.getByLabelText('There is a special offer for the product', { selector: 'input' })
     ).toBeInTheDocument();

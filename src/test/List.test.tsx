@@ -1,7 +1,8 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import List from '../components/List';
-import { ICard } from 'types/ICard';
+import { ICard } from '../types/ICard';
+import Card from '../components/Card/Card';
 
 const cards: ICard[] = [
   {
@@ -26,7 +27,13 @@ const cards: ICard[] = [
 
 describe('render cards', () => {
   it('cards list', () => {
-    render(<List items={cards} classNameList={'test__list'} />);
+    render(
+      <List
+        classNameList="test"
+        items={cards}
+        renderItem={(card: ICard) => <Card key={card.id} card={card} />}
+      />
+    );
     expect(screen.getAllByRole('img').length).toBe(cards.length);
   });
 });

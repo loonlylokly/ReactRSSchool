@@ -24,7 +24,10 @@ export default function App() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IFormInput>();
+  } = useForm<IFormInput>({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     const blob = new Blob([data.file[0]], { type: 'file/image' });
@@ -47,7 +50,17 @@ export default function App() {
           type="text"
           id="name"
           placeholder="Name"
-          {...register('name', { required: 'Name is required', minLength: 1, maxLength: 16 })}
+          {...register('name', {
+            required: 'Name is required',
+            minLength: {
+              value: 5,
+              message: 'This input exceed minLength.',
+            },
+            maxLength: {
+              value: 16,
+              message: 'This input exceed maxLength.',
+            },
+          })}
         />
         <br />
         <p className={styles.errorFormField}>{errors.name && errors.name.message}</p>
@@ -62,8 +75,14 @@ export default function App() {
           placeholder="Description"
           {...register('description', {
             required: 'Description is required',
-            minLength: 1,
-            maxLength: 16,
+            minLength: {
+              value: 5,
+              message: 'This input exceed minLength.',
+            },
+            maxLength: {
+              value: 16,
+              message: 'This input exceed maxLength.',
+            },
           })}
         />
         <br />

@@ -1,16 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Search.module.css';
 
 const Search = () => {
   const [search, setState] = useState(localStorage.getItem('search') || '');
+  const searchRef = useRef<string>();
 
   const onValueChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setState(e.target.value);
   };
 
   useEffect(() => {
-    localStorage.setItem('search', search);
+    searchRef.current = search;
   }, [search]);
+
+  useEffect(() => {
+    return function () {
+      localStorage.setItem('search', searchRef.current || '');
+    };
+  }, []);
 
   return (
     <div className={`${styles.wrapper}`}>

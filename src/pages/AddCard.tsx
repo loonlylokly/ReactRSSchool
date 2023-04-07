@@ -1,20 +1,36 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { ICard } from '../types/ICard';
 import Card from '../components/Card/Card';
 import List from '../components/List';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '../styles/AddCard.module.css';
 
-interface IFormInput {
-  name: string;
-  description: string;
-  date: Date;
-  type: string;
-  special: string;
-  availability: string;
-  file: FileList | '';
-}
+const schema = yup
+  .object({
+    name: yup
+      .string()
+      .min(3, 'Less than 3 characters')
+      .max(16, 'More than 3 characters')
+      .required('Name is required'),
+    description: yup
+      .string()
+      .min(10, 'Less than 10 characters')
+      .required('Description is required'),
+    // date: yup
+    //   .date()
+    //   .transform((value, originalValue) => originalValue)
+    //   .required('Date is required'),
+    date: yup.string().required('Date is required'),
+    type: yup.string().required('Type is required'),
+    special: yup.string().required('Special is required'),
+    availability: yup.string().required('Availability is required'),
+    file: yup.string().required('Image is required'),
+  })
+  .required();
+type FormData = yup.InferType<typeof schema>;
 
 export default function App() {
   const [isSubmission, setIsSubmission] = useState(false);
@@ -24,12 +40,13 @@ export default function App() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IFormInput>({
+  } = useForm<FormData>({
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
+    resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = (data) => {
     const blob = new Blob([data.file[0]], { type: 'file/image' });
     console.log(data.file[0]);
     const cards = JSON.parse(localStorage.getItem('cards') || '[]');
@@ -46,22 +63,7 @@ export default function App() {
       <div>
         <label htmlFor="name">Product Name</label>
         <br />
-        <input
-          type="text"
-          id="name"
-          placeholder="Name"
-          {...register('name', {
-            required: 'Name is required',
-            minLength: {
-              value: 5,
-              message: 'This input exceed minLength.',
-            },
-            maxLength: {
-              value: 16,
-              message: 'This input exceed maxLength.',
-            },
-          })}
-        />
+        <input type="text" id="name" placeholder="Name" {...register('name')} />
         <br />
         <p className={styles.errorFormField}>{errors.name && errors.name.message}</p>
       </div>
@@ -73,17 +75,7 @@ export default function App() {
           type="text"
           id="description"
           placeholder="Description"
-          {...register('description', {
-            required: 'Description is required',
-            minLength: {
-              value: 5,
-              message: 'This input exceed minLength.',
-            },
-            maxLength: {
-              value: 16,
-              message: 'This input exceed maxLength.',
-            },
-          })}
+          {...register('description')}
         />
         <br />
         <p className={styles.errorFormField}>{errors.description && errors.description.message}</p>
@@ -92,7 +84,7 @@ export default function App() {
       <div>
         <label htmlFor="date">Date of product appearance</label>
         <br />
-        <input type="date" id="date" {...register('date', { required: 'Date is required' })} />
+        <input type="date" id="date" {...register('date')} />
         <br />
         <p className={styles.errorFormField}>{errors.date && errors.date.message}</p>
       </div>
@@ -100,11 +92,7 @@ export default function App() {
       <div>
         <label htmlFor="type">Choose a type:</label>
         <br />
-        <select
-          id="type"
-          defaultValue="--Please choose an option--"
-          {...register('type', { required: 'Type is required' })}
-        >
+        <select id="type" defaultValue="--Please choose an option--" {...register('type')}>
           <option value="Classic">Classic</option>
           <option value="Electric">Electric</option>
           <option value="Steam">Steam</option>
@@ -114,24 +102,14 @@ export default function App() {
       </div>
 
       <div>
-        <input
-          type="checkbox"
-          id="special"
-          value="Special!!!"
-          {...register('special', { required: 'Special is required' })}
-        />
+        <input type="checkbox" id="special" value="Special!!!" {...register('special')} />
         <label htmlFor="special">There is a special offer for the product</label>
         <br />
         <p className={styles.errorFormField}>{errors.special && errors.special.message}</p>
       </div>
 
       <div>
-        <input
-          type="radio"
-          id="availability"
-          value="Availability"
-          {...register('availability', { required: 'Availability is required' })}
-        />
+        <input type="radio" id="availability" value="Availability" {...register('availability')} />
         <label htmlFor="availability">Available</label>
       </div>
       <div>
@@ -139,7 +117,7 @@ export default function App() {
           type="radio"
           id="not-availability"
           value="NotAvailability"
-          {...register('availability', { required: 'Availability is required' })}
+          {...register('availability')}
         />
         <label htmlFor="not-availability">Not available</label>
         <br />
@@ -151,12 +129,7 @@ export default function App() {
       <div>
         <label htmlFor="file">Choose a profile picture:</label>
         <br />
-        <input
-          type="file"
-          id="avatar"
-          accept="image/png, image/jpeg"
-          {...register('file', { required: 'Image is required' })}
-        />
+        <input type="file" id="avatar" accept="image/png, image/jpeg" {...register('file')} />
         <br />
         <span className={styles.errorFormField}>{errors.file && errors.file.message}</span>
       </div>

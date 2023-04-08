@@ -33,6 +33,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 export default function App() {
+  console.log('render');
   const [isSubmission, setIsSubmission] = useState(false);
 
   const {

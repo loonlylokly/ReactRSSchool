@@ -1,22 +1,27 @@
 import { FC } from 'react';
-import { ICard } from '../../types/ICard';
+import { Character } from 'types/Character';
 import styles from './Card.module.css';
 
 interface CardItemsProps {
-  card: ICard;
+  card: Character;
 }
 
 const Card: FC<CardItemsProps> = ({ card }) => {
-  const { title, description, type, availability, image, special } = card;
+  const { id, name, status, species, type, gender, origin, location, image, created } = card;
 
   return (
     <div className={`${styles.card}`}>
       <img src={image} className={styles.resized} />
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <p>Type:{type}</p>
-      <p>Availability:{availability}</p>
-      <p>Special:{special}</p>
+      <h3>{name}</h3>
+      <p>
+        Status:{status} <br />
+        Type:{type} <br />
+        Gender:{gender} <br />
+        Species:{species} <br />
+        Origin:{origin.name} <br />
+        Location:{location.name} <br />
+        {/* Created:{created} */}
+      </p>
     </div>
   );
 };

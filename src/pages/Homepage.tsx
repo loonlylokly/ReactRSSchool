@@ -1,27 +1,33 @@
+import { Link, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Search from '../components/Search/Search';
 import List from '../components/List';
 import styles from '../styles/Home.module.css';
 import Card from '../components/Card/Card';
-import Pagination from '@mui/material/Pagination';
-import { useEffect, useState } from 'react';
+import { Pagination, PaginationItem } from '@mui/material';
 import { Character } from 'types/Character';
 
+const URL = 'https://rickandmortyapi.com/api/';
+
 const Homepage = () => {
-  console.log('render');
+  const [searchParams, setSearchParams] = useSearchParams();
   const [characters, setCharacters] = useState<Character[]>([]);
-  const [pages, setPages] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [query, setQuery] = useState(searchParams.get('name') || '');
+  const [pageQty, setPageQty] = useState(0);
+  const [page, setPage] = useState(parseInt(searchParams.get('page') || '') || 1);
 
   useEffect(() => {
-    console.log('useEffect');
-    fetch('https://rickandmortyapi.com/api/character')
+    fetch(`${URL}/character/?name=${query}&page=${page}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.info.pages);
-        setPages(Array.from(Array(data.info.pages).keys()));
+        setPageQty(data.info.pages);
         setCharacters(data.results);
+
+        if (data.info.pages < page) {
+          setPage(1);
+        }
       });
-  }, []);
+  }, [query, page]);
 
   return (
     <>
@@ -33,10 +39,15 @@ const Homepage = () => {
       />
       <Pagination
         className={styles.pagination}
-        count={pages.length}
+        count={pageQty}
+        page={page}
         size="large"
+        onChange={(_, num) => setPage(num)}
         showFirstButton
         showLastButton
+        renderItem={(item) => (
+          <PaginationItem component={Link} to={`/?page=${item.page}`} {...item} />
+        )}
       />
     </>
   );

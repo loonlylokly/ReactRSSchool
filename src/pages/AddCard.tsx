@@ -137,11 +137,11 @@ export default function App() {
       <div>
         <button type="submit">Submit</button>
       </div>
-      <List
+      {/* <List
         classNameList={styles.cards__list}
         items={JSON.parse(localStorage.getItem('cards') ?? '[]')}
         renderItem={(card: ICard) => <Card key={card.id} card={card} />}
-      />
+      /> */}
     </form>
   );
 }

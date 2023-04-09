@@ -19,10 +19,6 @@ const schema = yup
       .string()
       .min(10, 'Less than 10 characters')
       .required('Description is required'),
-    // date: yup
-    //   .date()
-    //   .transform((value, originalValue) => originalValue)
-    //   .required('Date is required'),
     date: yup.string().required('Date is required'),
     type: yup.string().required('Type is required'),
     special: yup.string().required('Special is required'),

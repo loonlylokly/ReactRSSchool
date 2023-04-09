@@ -31,7 +31,12 @@ const Homepage = () => {
 
   return (
     <>
-      <Search />
+      <Search
+        submitMethod={(data: string) => {
+          setQuery(data);
+          setPage(1);
+        }}
+      />
       <List
         classNameList={styles.cards__list}
         items={characters}

@@ -4,13 +4,19 @@ import styles from './Card.module.css';
 
 interface CardItemsProps {
   card: Character;
+  onClick: (id: number) => void;
 }
 
-const Card: FC<CardItemsProps> = ({ card }) => {
+const Card: FC<CardItemsProps> = ({ card, onClick }) => {
   const { id, name, status, species, type, gender, origin, location, image, created } = card;
 
   return (
-    <div className={`${styles.card}`}>
+    <div
+      className={`${styles.card}`}
+      onClick={() => {
+        onClick(id);
+      }}
+    >
       <img src={image} className={styles.resized} />
       <h3>{name}</h3>
       <p>

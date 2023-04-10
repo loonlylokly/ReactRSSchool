@@ -1,40 +1,23 @@
-import { FC, useEffect, useRef, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import React, { FC, useEffect, useRef } from 'react';
 import styles from './Search.module.css';
-
-type FormData = {
-  search: string;
-};
 
 type SearchProps = {
   submitMethod: (data: string) => void;
 };
 
 const Search: FC<SearchProps> = ({ submitMethod }) => {
-  const [search, setState] = useState(localStorage.getItem('search') || '');
+  console.log('test');
   const searchRef = useRef<string>();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
-  });
-
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    submitMethod(data.search);
-    console.log(data);
+  const onSubmit = (e: React.FormEvent) => {
+    submitMethod(searchRef.current || '');
+    e.preventDefault();
   };
 
-  const onValueChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setState(e.target.value);
+  const onValueChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
+    console.log(e.target);
+    searchRef.current = e.target.value;
   };
-
-  useEffect(() => {
-    searchRef.current = search;
-  }, [search]);
 
   useEffect(() => {
     return function () {
@@ -44,14 +27,13 @@ const Search: FC<SearchProps> = ({ submitMethod }) => {
 
   return (
     <div className={`${styles.wrapper}`}>
-      <form className={`${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
+      <form className={`${styles.form}`} onSubmit={onSubmit}>
         <input
           className={`${styles.input}`}
           type="search"
           id="site-search"
-          value={search}
-          // onChange={onValueChange}
-          {...register('search')}
+          defaultValue={localStorage.getItem('search') || ''}
+          onChange={onValueChange}
         />
         <button className={`${styles.button}`} type="submit">
           <span className={`material-symbols-outlined`}>search</span>

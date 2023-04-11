@@ -32,12 +32,14 @@ const Homepage = () => {
     fetch(`${URL}/character/?name=${query}&page=${page}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(page, data);
         if (data.info.count > 0) {
           setPageQty(data.info.pages);
           setCharacters(data.results);
         }
 
         if (data.info.pages < page) {
+          console.log(page, data.info.pages);
           setPage(1);
         }
       })
@@ -59,7 +61,6 @@ const Homepage = () => {
       <Search
         submitMethod={(data: string) => {
           setQuery(data);
-          setPage(1);
         }}
       />
       {!characters.length ? (

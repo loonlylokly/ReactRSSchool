@@ -6,7 +6,6 @@ type SearchProps = {
 };
 
 const Search: FC<SearchProps> = ({ submitMethod }) => {
-  console.log('test');
   const searchRef = useRef<string>();
 
   const onSubmit = (e: React.FormEvent) => {
@@ -15,11 +14,13 @@ const Search: FC<SearchProps> = ({ submitMethod }) => {
   };
 
   const onValueChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
-    console.log(e.target);
     searchRef.current = e.target.value;
   };
 
   useEffect(() => {
+    searchRef.current = localStorage.getItem('search') || '';
+    submitMethod(searchRef.current || '');
+
     return function () {
       localStorage.setItem('search', searchRef.current || '');
     };

@@ -1,27 +1,27 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import List from '../components/List';
-import { ICard } from '../types/ICard';
 import Card from '../components/Card/Card';
+import { Character } from '../types/Character';
 
-const cards: ICard[] = [
+const cards: Character[] = [
   {
-    id: '2',
-    title: 'Holy Minimalism',
-    type: 'Classic',
-    availability: 'Available',
-    special: 'not special',
-    description: 'description_2',
-    image: '2.png',
+    id: 1,
+    name: 'Test1',
+    status: 'Alive',
+    species: 'Test 1',
+    type: 'Test',
+    gender: 'Genderless',
+    image: 'test1.png',
   },
   {
-    id: '3',
-    title: 'Boiling Baroque',
-    type: 'Classic',
-    availability: 'Not Available',
-    special: 'not special',
-    description: 'description_3',
-    image: '3.png',
+    id: 2,
+    name: 'Test2',
+    status: 'Dead',
+    species: 'Test 2',
+    type: 'Test',
+    gender: 'unknown',
+    image: 'test2.png',
   },
 ];
 
@@ -31,7 +31,7 @@ describe('render cards', () => {
       <List
         classNameList="test"
         items={cards}
-        renderItem={(card: ICard) => <Card key={card.id} card={card} />}
+        renderItem={(card: Character) => <Card key={card.id} card={card} onClick={() => {}} />}
       />
     );
     expect(screen.getAllByRole('img').length).toBe(cards.length);

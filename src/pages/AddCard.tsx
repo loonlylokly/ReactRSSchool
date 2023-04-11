@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { ICard } from '../types/ICard';
-import Card from '../components/Card/Card';
-import List from '../components/List';
+// import { ICard } from '../types/ICard';
+// import Card from '../components/Card/Card';
+// import List from '../components/List';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '../styles/AddCard.module.css';
 

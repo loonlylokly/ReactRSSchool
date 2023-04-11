@@ -4,14 +4,14 @@ import Search from '../components/Search/Search';
 import List from '../components/List';
 import styles from '../styles/Home.module.css';
 import Card from '../components/Card/Card';
-import { Dialog, DialogTitle, Pagination, PaginationItem } from '@mui/material';
+import { Dialog, Pagination, PaginationItem } from '@mui/material';
 import { Character } from 'types/Character';
 import Loading from '../components/Loading/Loading';
 
 const URL = 'https://rickandmortyapi.com/api/';
 
 const Homepage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [characters, setCharacters] = useState<Character[]>([]);
   const [query, setQuery] = useState(searchParams.get('name') || '');
   const [pageQty, setPageQty] = useState(0);
@@ -32,7 +32,6 @@ const Homepage = () => {
     fetch(`${URL}/character/?name=${query}&page=${page}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log('test1', characters);
         if (data.info.count > 0) {
           setPageQty(data.info.pages);
           setCharacters(data.results);
@@ -57,7 +56,6 @@ const Homepage = () => {
 
   return (
     <>
-      {console.log('test2', characters)}
       <Search
         submitMethod={(data: string) => {
           setQuery(data);

@@ -8,7 +8,7 @@ interface CardItemsProps {
 }
 
 const Card: FC<CardItemsProps> = ({ card, onClick }) => {
-  const { id, name, status, species, type, gender, origin, location, image, created } = card;
+  const { id, name, status, species, type, gender, origin, location, image } = card;
 
   return (
     <div
@@ -24,9 +24,8 @@ const Card: FC<CardItemsProps> = ({ card, onClick }) => {
         Type:{type} <br />
         Gender:{gender} <br />
         Species:{species} <br />
-        Origin:{origin.name} <br />
-        Location:{location.name} <br />
-        {/* Created:{created} */}
+        Origin:{origin?.name} <br />
+        Location:{location?.name} <br />
       </p>
     </div>
   );

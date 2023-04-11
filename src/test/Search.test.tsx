@@ -4,7 +4,7 @@ import Search from '../components/Search/Search';
 
 describe('<Search />', () => {
   it('render search', () => {
-    render(<Search />);
+    render(<Search submitMethod={() => {}} />);
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
   });
 });

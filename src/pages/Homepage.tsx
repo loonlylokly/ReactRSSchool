@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css';
 import Card from '../components/Card/Card';
 import { Dialog, DialogTitle, Pagination, PaginationItem } from '@mui/material';
 import { Character } from 'types/Character';
+import Loading from '../components/Loading/Loading';
 
 const URL = 'https://rickandmortyapi.com/api/';
 
@@ -31,6 +32,7 @@ const Homepage = () => {
     fetch(`${URL}/character/?name=${query}&page=${page}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log('test1', characters);
         if (data.info.count > 0) {
           setPageQty(data.info.pages);
           setCharacters(data.results);
@@ -55,17 +57,22 @@ const Homepage = () => {
 
   return (
     <>
+      {console.log('test2', characters)}
       <Search
         submitMethod={(data: string) => {
           setQuery(data);
           setPage(1);
         }}
       />
-      <List
-        classNameList={styles.cards__list}
-        items={characters}
-        renderItem={(card: Character) => <Card key={card.id} card={card} onClick={handleClick} />}
-      />
+      {!characters.length ? (
+        <Loading />
+      ) : (
+        <List
+          classNameList={styles.cards__list}
+          items={characters}
+          renderItem={(card: Character) => <Card key={card.id} card={card} onClick={handleClick} />}
+        />
+      )}
       <Pagination
         className={styles.pagination}
         count={pageQty}

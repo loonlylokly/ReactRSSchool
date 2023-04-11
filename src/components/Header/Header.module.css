@@ -1,0 +1,26 @@
+.menu {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 40px;
+}
+
+.item {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  flex-grow: 18;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.link {
+  color: black;
+  text-decoration: none;
+  line-height: 1.1;
+}

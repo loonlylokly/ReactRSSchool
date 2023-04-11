@@ -24,7 +24,7 @@ const Search: FC<SearchProps> = ({ submitMethod }) => {
     return function () {
       localStorage.setItem('search', searchRef.current || '');
     };
-  }, []);
+  }, [submitMethod]);
 
   return (
     <div className={`${styles.wrapper}`}>

@@ -5,10 +5,11 @@ import styles from './Card.module.css';
 interface CardItemsProps {
   card: Character;
   onClick: (id: number) => void;
+  popup?: boolean;
 }
 
-const Card: FC<CardItemsProps> = ({ card, onClick }) => {
-  const { id, name, status, species, type, gender, origin, location, image } = card;
+const Card: FC<CardItemsProps> = ({ card, onClick, popup }) => {
+  const { id, name, status, species, type, gender, origin, location, image, created } = card;
 
   return (
     <div
@@ -26,6 +27,7 @@ const Card: FC<CardItemsProps> = ({ card, onClick }) => {
         Species:{species} <br />
         Origin:{origin?.name} <br />
         Location:{location?.name} <br />
+        <span className={styles.green}>{popup && `Created:${created}`}</span>
       </p>
     </div>
   );

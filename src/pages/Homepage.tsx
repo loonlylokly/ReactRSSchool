@@ -68,7 +68,9 @@ const Homepage = () => {
         <List
           classNameList={styles.cards__list}
           items={characters}
-          renderItem={(card: Character) => <Card key={card.id} card={card} onClick={handleClick} />}
+          renderItem={(card: Character) => (
+            <Card key={card.id} card={card} onClick={handleClick} popup={false} />
+          )}
         />
       )}
       <Pagination
@@ -87,6 +89,7 @@ const Homepage = () => {
         <Card
           card={characters.find((item) => item.id === activeCardId) || characters[0]}
           onClick={() => {}}
+          popup={true}
         />
       </Dialog>
     </>

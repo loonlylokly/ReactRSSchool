@@ -1,11 +1,19 @@
 .resized {
-  width: 150px;
+  width: 250px;
   height: auto;
 }
 
 .card {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
   width: 250px;
   border: 1px solid #000;
+  text-align: start;
+}
+
+.cardText {
+  width: 90%;
 }
 
 .green {

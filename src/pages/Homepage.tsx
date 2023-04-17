@@ -1,25 +1,31 @@
-import { Link, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Search from '../components/Search/Search';
 import List from '../components/List';
 import styles from '../styles/Home.module.css';
 import Card from '../components/Card/Card';
-import { Dialog, Pagination, PaginationItem } from '@mui/material';
+import { Dialog, Pagination } from '@mui/material';
 import { Character } from 'types/Character';
 import Loading from '../components/Loading/Loading';
-
-const URL = 'https://rickandmortyapi.com/api/';
+import { useGetCharacterQuery } from '../store';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { searchSlice } from '../store/searchSlice';
 
 const Homepage = () => {
-  const [searchParams] = useSearchParams();
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [query, setQuery] = useState(searchParams.get('name') || '');
-  const [pageQty, setPageQty] = useState(0);
-  const [page, setPage] = useState(parseInt(searchParams.get('page') || '') || 1);
   const [activeCardId, setActiveCardId] = useState(0);
   const [open, setOpen] = useState(false);
 
+  const dispatch = useAppDispatch();
+  const { saveSearch } = searchSlice.actions;
+  const searchText = useAppSelector((state) => state.search.searchText);
+  const page = useAppSelector((state) => state.search.page);
+  const { data = { info: { pages: 1 }, results: [] }, isLoading } = useGetCharacterQuery({
+    query: searchText,
+    page: page,
+  });
+  console.log('render', data.info, open, searchText, page);
+
   const handleClick = (id: number) => {
+    setOpen(true);
     setActiveCardId(id);
   };
 
@@ -28,47 +34,15 @@ const Homepage = () => {
     setTimeout(setActiveCardId, 300, 0);
   };
 
-  useEffect(() => {
-    fetch(`${URL}/character/?name=${query}&page=${page}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(page, data);
-        if (data.info.count > 0) {
-          setPageQty(data.info.pages);
-          setCharacters(data.results);
-        }
-
-        if (data.info.pages < page) {
-          console.log(page, data.info.pages);
-          setPage(1);
-        }
-      })
-      .catch(() => {
-        console.log('error');
-        setPageQty(1);
-        setCharacters([]);
-      });
-  }, [query, page]);
-
-  useEffect(() => {
-    if (activeCardId) {
-      setOpen(true);
-    }
-  }, [activeCardId]);
-
   return (
     <>
-      <Search
-        submitMethod={(data: string) => {
-          setQuery(data);
-        }}
-      />
-      {!characters.length ? (
+      <Search />
+      {isLoading ? (
         <Loading />
       ) : (
         <List
           classNameList={styles.cards__list}
-          items={characters}
+          items={data.results || []}
           renderItem={(card: Character) => (
             <Card key={card.id} card={card} onClick={handleClick} popup={false} />
           )}
@@ -76,19 +50,16 @@ const Homepage = () => {
       )}
       <Pagination
         className={styles.pagination}
-        count={pageQty}
+        count={data.info.pages}
         page={page}
         size="large"
-        onChange={(_, num) => setPage(num)}
+        onChange={(_, num) => dispatch(saveSearch({ searchText: searchText, page: num }))}
         showFirstButton
         showLastButton
-        renderItem={(item) => (
-          <PaginationItem component={Link} to={`/?page=${item.page}`} {...item} />
-        )}
       />
       <Dialog open={open} onClose={handleClose}>
         <Card
-          card={characters.find((item) => item.id === activeCardId) || characters[0]}
+          card={data?.results.find((item) => item.id === activeCardId) || data?.results[0]}
           onClick={() => {}}
           popup={true}
         />

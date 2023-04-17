@@ -1,15 +1,18 @@
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import React, { FC, useEffect, useRef } from 'react';
+import { searchSlice } from '../../store/searchSlice';
 import styles from './Search.module.css';
 
-type SearchProps = {
-  submitMethod: (data: string) => void;
-};
-
-const Search: FC<SearchProps> = ({ submitMethod }) => {
+const Search = () => {
   const searchRef = useRef<string>();
+  const dispatch = useAppDispatch();
+  const { saveSearch } = searchSlice.actions;
+  const searchText = useAppSelector((state) => state.search.searchText);
+
+  console.log('render');
 
   const onSubmit = (e: React.FormEvent) => {
-    submitMethod(searchRef.current || '');
+    dispatch(saveSearch({ searchText: searchRef.current, page: 1 }));
     e.preventDefault();
   };
 
@@ -18,13 +21,10 @@ const Search: FC<SearchProps> = ({ submitMethod }) => {
   };
 
   useEffect(() => {
-    searchRef.current = localStorage.getItem('search') || '';
-    submitMethod(searchRef.current || '');
-
     return function () {
-      localStorage.setItem('search', searchRef.current || '');
+      dispatch(saveSearch({ searchText: searchRef.current, page: 1 }));
     };
-  }, [submitMethod]);
+  }, []);
 
   return (
     <div className={`${styles.wrapper}`}>
@@ -33,7 +33,7 @@ const Search: FC<SearchProps> = ({ submitMethod }) => {
           className={`${styles.input}`}
           type="search"
           id="site-search"
-          defaultValue={localStorage.getItem('search') || ''}
+          defaultValue={searchText || ''}
           onChange={onValueChange}
         />
         <button className={`${styles.button}`} type="submit">

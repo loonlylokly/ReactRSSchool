@@ -1,13 +1,15 @@
 .menu {
   list-style-type: none;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: flex-end;
   margin-top: 40px;
+  padding: 0;
 }
 
 .item {
-  flex-grow: 1;
+  width: fit-content;
+  padding: 10px 20px;
   display: flex;
   justify-content: center;
 }

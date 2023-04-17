@@ -20,7 +20,7 @@ const Card: FC<CardItemsProps> = ({ card, onClick, popup }) => {
     >
       <img src={image} className={styles.resized} />
       <h3>{name}</h3>
-      <p>
+      <p className={styles.cardText}>
         Status:{status} <br />
         Type:{type} <br />
         Gender:{gender} <br />

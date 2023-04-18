@@ -7,22 +7,19 @@ import * as yup from 'yup';
 // import List from '../components/List';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '../styles/AddCard.module.css';
+import TextField from '../components/TextField/TextField';
+import Radio from '../components/Radio/Radio';
+import Select from '../components/Select/Select';
 
 const schema = yup
   .object({
-    name: yup
-      .string()
-      .min(3, 'Less than 3 characters')
-      .max(16, 'More than 3 characters')
-      .required('Name is required'),
-    description: yup
-      .string()
-      .min(10, 'Less than 10 characters')
-      .required('Description is required'),
-    date: yup.string().required('Date is required'),
-    type: yup.string().required('Type is required'),
-    special: yup.string().required('Special is required'),
-    availability: yup.string().required('Availability is required'),
+    name: yup.string().min(3, 'Less than 3 characters').required('Name is required'),
+    type: yup.string().min(3, 'Less than 10 characters').required('Type is required'),
+    species: yup.string().min(3, 'Less than 10 characters').required('Species is required'),
+    origin: yup.string().min(3, 'Less than 10 characters').required('Origin is required'),
+    location: yup.string().min(3, 'Less than 10 characters').required('Location is required'),
+    gender: yup.string().required('Gender is required'),
+    status: yup.string().required('Status is required'),
     file: yup.string().required('Image is required'),
   })
   .required();
@@ -31,6 +28,7 @@ type FormData = yup.InferType<typeof schema>;
 export default function App() {
   console.log('render');
   const [isSubmission, setIsSubmission] = useState(false);
+  const gender = ['Female', 'Male', 'Genderless', 'unknown'];
 
   const {
     register,
@@ -57,79 +55,76 @@ export default function App() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {isSubmission && <span className={styles.success}>successfully submitted!</span>}
-      <div>
-        <label htmlFor="name">Product Name</label>
-        <br />
-        <input type="text" id="name" placeholder="Name" {...register('name')} />
-        <br />
-        <p className={styles.errorFormField}>{errors.name && errors.name.message}</p>
-      </div>
-
-      <div>
-        <label htmlFor="description">Product Description</label>
-        <br />
-        <input
-          type="text"
-          id="description"
-          placeholder="Description"
-          {...register('description')}
-        />
-        <br />
-        <p className={styles.errorFormField}>{errors.description && errors.description.message}</p>
-      </div>
-
-      <div>
-        <label htmlFor="date">Date of product appearance</label>
-        <br />
-        <input type="date" id="date" {...register('date')} />
-        <br />
-        <p className={styles.errorFormField}>{errors.date && errors.date.message}</p>
-      </div>
-
-      <div>
-        <label htmlFor="type">Choose a type:</label>
-        <br />
-        <select id="type" defaultValue="--Please choose an option--" {...register('type')}>
-          <option value="Classic">Classic</option>
-          <option value="Electric">Electric</option>
-          <option value="Steam">Steam</option>
-        </select>
-        <br />
-        <p className={styles.errorFormField}>{errors.type && errors.type.message}</p>
-      </div>
-
-      <div>
-        <input type="checkbox" id="special" value="Special!!!" {...register('special')} />
-        <label htmlFor="special">There is a special offer for the product</label>
-        <br />
-        <p className={styles.errorFormField}>{errors.special && errors.special.message}</p>
-      </div>
-
-      <div>
-        <input type="radio" id="availability" value="Availability" {...register('availability')} />
-        <label htmlFor="availability">Available</label>
-      </div>
-      <div>
-        <input
-          type="radio"
-          id="not-availability"
-          value="NotAvailability"
-          {...register('availability')}
-        />
-        <label htmlFor="not-availability">Not available</label>
-        <br />
-        <p className={styles.errorFormField}>
-          {errors.availability && errors.availability.message}
-        </p>
-      </div>
-
-      <div>
-        <label htmlFor="file">Choose a profile picture:</label>
-        <br />
-        <input type="file" id="avatar" accept="image/png, image/jpeg" {...register('file')} />
-        <br />
-        <span className={styles.errorFormField}>{errors.file && errors.file.message}</span>
-      </div>
+      <TextField
+        id="name"
+        type="text"
+        label="Character Name"
+        placeholder="Name"
+        register={() => register('name')}
+        styles={{ error: styles.errorFormField }}
+        error={errors.name && errors.name.message}
+      />
+      <Select
+        id={'status'}
+        label={'Choose a status:'}
+        values={['Alive', 'Dead', 'unknown']}
+        register={() => register('status')}
+        styles={{ error: styles.errorFormField }}
+        error={errors.status && errors.status.message}
+      />
+      <TextField
+        id="type"
+        type="text"
+        label="Character Type"
+        placeholder="Type"
+        register={() => register('type')}
+        styles={{ error: styles.errorFormField }}
+        error={errors.type && errors.type.message}
+      />
+      <Radio
+        ids={gender}
+        values={gender}
+        labels={gender}
+        register={() => register('gender')}
+        styles={{ error: styles.errorFormField }}
+        error={errors.gender && errors.gender.message}
+      />
+      <TextField
+        id="species"
+        type="text"
+        label="Character Species"
+        placeholder="Human"
+        register={() => register('species')}
+        styles={{ error: styles.errorFormField }}
+        error={errors.species && errors.species.message}
+      />
+      <TextField
+        id="origin"
+        type="text"
+        label="Character Origin"
+        placeholder="Earth"
+        register={() => register('origin')}
+        styles={{ error: styles.errorFormField }}
+        error={errors.origin && errors.origin.message}
+      />
+      <TextField
+        id="location"
+        type="text"
+        label="Character Location"
+        placeholder="Earth"
+        register={() => register('location')}
+        styles={{ error: styles.errorFormField }}
+        error={errors.location && errors.location.message}
+      />
+      <TextField
+        id="avatar"
+        type="file"
+        label="Choose a profile picture:"
+        accept="image/png, image/jpeg"
+        register={() => register('file')}
+        styles={{ error: styles.errorFormField }}
+        error={errors.file && errors.file.message}
+      />
       <div>
         <button type="submit">Submit</button>
       </div>

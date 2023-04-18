@@ -22,7 +22,7 @@ const schema = yup
     location: yup.string().min(3, 'Less than 10 characters').required('Location is required'),
     gender: yup.string().required('Gender is required'),
     status: yup.string().required('Status is required'),
-    image: yup.string().required('Image is required'),
+    image: yup.mixed().required('Image is required'),
   })
   .required();
 type FormData = yup.InferType<typeof schema>;
@@ -46,10 +46,16 @@ export default function AddCard() {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    const blob = new Blob([data.image[0]], { type: 'file/image' });
-    // cards.push({ ...data, image: URL.createObjectURL(blob), id: uuidv4() });
-
-    dispatch(addCard({ card: { ...data, image: URL.createObjectURL(blob), id: uuidv4() } }));
+    const images = data.image as FileList;
+    dispatch(
+      addCard({
+        card: {
+          ...data,
+          image: URL.createObjectURL(images[0]),
+          id: uuidv4(),
+        },
+      })
+    );
 
     setIsSubmission(true);
     setTimeout(setIsSubmission, 3000, false);

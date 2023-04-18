@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import React, { FC, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { searchSlice } from '../../store/searchSlice';
 import styles from './Search.module.css';
 
@@ -24,7 +24,7 @@ const Search = () => {
     return function () {
       dispatch(saveSearch({ searchText: searchRef.current, page: 1 }));
     };
-  }, []);
+  }, [dispatch, saveSearch]);
 
   return (
     <div className={`${styles.wrapper}`}>

@@ -129,7 +129,7 @@ export default function AddCard() {
       <TextField
         id="avatar"
         type="file"
-        label="Choose a profile picture:"
+        label="Choose a character picture:"
         accept="image/png, image/jpeg"
         register={() => register('image')}
         styles={{ error: styles.errorFormField }}

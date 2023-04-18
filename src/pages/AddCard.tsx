@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-// import { ICard } from '../types/ICard';
-// import Card from '../components/Card/Card';
-// import List from '../components/List';
+import { Character } from '../types/Character';
+import Card from '../components/Card/Card';
+import List from '../components/List';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '../styles/AddCard.module.css';
 import TextField from '../components/TextField/TextField';
 import Radio from '../components/Radio/Radio';
 import Select from '../components/Select/Select';
+import { cardsSlice } from '../store/cardsSliece';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 const schema = yup
   .object({
@@ -20,16 +22,18 @@ const schema = yup
     location: yup.string().min(3, 'Less than 10 characters').required('Location is required'),
     gender: yup.string().required('Gender is required'),
     status: yup.string().required('Status is required'),
-    file: yup.string().required('Image is required'),
+    image: yup.string().required('Image is required'),
   })
   .required();
 type FormData = yup.InferType<typeof schema>;
 
-export default function App() {
-  console.log('render');
+export default function AddCard() {
   const [isSubmission, setIsSubmission] = useState(false);
+  const { addCard } = cardsSlice.actions;
+  const dispatch = useAppDispatch();
+  const cards = useAppSelector((state) => state.cards.cards);
   const gender = ['Female', 'Male', 'Genderless', 'unknown'];
-
+  console.log(cards);
   const {
     register,
     handleSubmit,
@@ -42,11 +46,11 @@ export default function App() {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    const blob = new Blob([data.file[0]], { type: 'file/image' });
-    console.log(data.file[0]);
-    const cards = JSON.parse(localStorage.getItem('cards') || '[]');
-    cards.push({ ...data, image: URL.createObjectURL(blob), id: uuidv4() });
-    localStorage.setItem('cards', JSON.stringify(cards));
+    const blob = new Blob([data.image[0]], { type: 'file/image' });
+    // cards.push({ ...data, image: URL.createObjectURL(blob), id: uuidv4() });
+
+    dispatch(addCard({ card: { ...data, image: URL.createObjectURL(blob), id: uuidv4() } }));
+
     setIsSubmission(true);
     setTimeout(setIsSubmission, 3000, false);
     reset();
@@ -121,18 +125,20 @@ export default function App() {
         type="file"
         label="Choose a profile picture:"
         accept="image/png, image/jpeg"
-        register={() => register('file')}
+        register={() => register('image')}
         styles={{ error: styles.errorFormField }}
-        error={errors.file && errors.file.message}
+        error={errors.image && errors.image.message}
       />
       <div>
         <button type="submit">Submit</button>
       </div>
-      {/* <List
+      <List
         classNameList={styles.cards__list}
-        items={JSON.parse(localStorage.getItem('cards') ?? '[]')}
-        renderItem={(card: ICard) => <Card key={card.id} card={card} />}
-      /> */}
+        items={cards || []}
+        renderItem={(card: Character) => (
+          <Card key={card.id} card={card} onClick={() => {}} popup={false} />
+        )}
+      />
     </form>
   );
 }

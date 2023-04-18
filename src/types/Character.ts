@@ -11,11 +11,11 @@ export type Character = {
   created?: string;
   origin?: {
     name: string;
-    url: string;
+    url?: string;
   };
   location?: {
     name: string;
-    url: string;
+    url?: string;
   };
   // created: '2017-11-04T18:48:46.250Z';
   // created: Date;

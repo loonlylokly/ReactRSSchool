@@ -22,7 +22,6 @@ const Homepage = () => {
     query: searchText,
     page: page,
   });
-  console.log('render', data.info, open, searchText, page);
 
   const handleClick = (id: number) => {
     setOpen(true);
@@ -37,18 +36,14 @@ const Homepage = () => {
   return (
     <>
       <Search />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <List
-          classNameList={styles.cards__list}
-          items={data.results || []}
-          renderItem={(card: Character) => (
-            <Card key={card.id} card={card} onClick={handleClick} popup={false} />
-          )}
-        />
-      )}
-      <Pagination
+      <List
+        classNameList={styles.cards__list}
+        items={data.results || []}
+        renderItem={(card: Character) => (
+          <Card key={card.id} card={card} onClick={handleClick} popup={false} />
+        )}
+      />
+      {/* <Pagination
         className={styles.pagination}
         count={data.info.pages}
         page={page}
@@ -63,7 +58,7 @@ const Homepage = () => {
           onClick={() => {}}
           popup={true}
         />
-      </Dialog>
+      </Dialog> */}
     </>
   );
 };

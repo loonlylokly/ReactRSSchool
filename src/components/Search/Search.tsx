@@ -9,8 +9,6 @@ const Search = () => {
   const { saveSearch } = searchSlice.actions;
   const searchText = useAppSelector((state) => state.search.searchText);
 
-  console.log('render');
-
   const onSubmit = (e: React.FormEvent) => {
     dispatch(saveSearch({ searchText: searchRef.current, page: 1 }));
     e.preventDefault();

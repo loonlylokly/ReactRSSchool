@@ -33,7 +33,6 @@ export default function AddCard() {
   const dispatch = useAppDispatch();
   const cards = useAppSelector((state) => state.cards.cards);
   const gender = ['Female', 'Male', 'Genderless', 'unknown'];
-  console.log(cards);
   const {
     register,
     handleSubmit,
